@@ -94,6 +94,12 @@ public class Product {
 	public void setProductGroup(ProductGroup productGroup) {
 		this.productGroup = productGroup;
 	}
+
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	
 	

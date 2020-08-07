@@ -58,6 +58,11 @@ public class ProductGroup {
 		this.productGroupId = productGroupId;
 		this.name = name;
 	}
+
+	public ProductGroup() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	
