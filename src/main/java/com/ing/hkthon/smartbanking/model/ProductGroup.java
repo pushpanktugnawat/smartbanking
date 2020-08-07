@@ -59,7 +59,10 @@ public class ProductGroup {
 		this.name = name;
 	}
 	
-	
+	public ProductGroup() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	
