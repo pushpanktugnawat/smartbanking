@@ -12,12 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * The Class ProductGroup.
  * @author Pushpank
  */
 @Entity
 @Table(name="product_group")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ProductGroup {
 	
 	/** The product group id. */

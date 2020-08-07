@@ -1,29 +1,58 @@
+/*
+ *  Copyright (c) 2020 Andree Hagelstein, Maik Schulze, Deutsche Telekom AG. All Rights Reserved.
+ *  
+ *  Filename: Product.java
+ */
 package com.ing.hkthon.smartbanking.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/**
+ * The Class Product.
+ * @author pushpank
+ */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Entity
+@Table(name="products")
 public class Product {
-	private int id;
+	
+	/** The product id. */
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="productid")
+	private int productId;
+	
+	/** The name. */
 	private String name;
-	private float price;
+	
+	/** The min balance. */
+	private float minBalance;
+	
+	/** The duration. */
+	private int duration;
 
-	public Product(int id) {
-		this.id = id;
+	/** The product group. */
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="product_group_id")
+	private ProductGroup productGroup;
+	
+	
+	public int getProductId() {
+		return productId;
 	}
 
-	public Product() {
-	}
-
-	public Product(int id, String name, float price) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
 	public String getName() {
@@ -34,33 +63,41 @@ public class Product {
 		this.name = name;
 	}
 
-	public float getPrice() {
-		return price;
+	public float getMinBalance() {
+		return minBalance;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setMinBalance(float minBalance) {
+		this.minBalance = minBalance;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+	public int getDuration() {
+		return duration;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}	
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public Product(int productId, String name, float minBalance, int duration) {
+		super();
+		this.productId = productId;
+		this.name = name;
+		this.minBalance = minBalance;
+		this.duration = duration;
+	}
+
+	public ProductGroup getProductGroup() {
+		return productGroup;
+	}
+
+	public void setProductGroup(ProductGroup productGroup) {
+		this.productGroup = productGroup;
+	}
+	
+	
+	
+	
+	
+
 }
