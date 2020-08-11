@@ -78,7 +78,7 @@ public class ProductServiceImplTest {
 
 		ResponseEntity<List<Product>> expected = productServiceImpl.getAllProductsByProductGroupId(1);
 
-		Assertions.assertNotSame(ResponseEntity.noContent(), ResponseEntity.ok(products));
+		Assertions.assertNotSame(expected, ResponseEntity.ok(products));
 	}
 	
 	/**
@@ -127,7 +127,7 @@ public class ProductServiceImplTest {
 
 		ResponseEntity<Product> expected = productServiceImpl.findProductByProductId(1);
 
-		Assertions.assertEquals(ResponseEntity.noContent().build(), ResponseEntity.noContent().build());
+		Assertions.assertEquals(expected, ResponseEntity.noContent().build());
 	}
 
 }
