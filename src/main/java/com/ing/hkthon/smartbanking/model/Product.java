@@ -88,9 +88,7 @@ public class Product {
 	public void setProductGroup(ProductGroup productGroup) {
 		this.productGroup = productGroup;
 	}
-
 	
-
 	public Product(int productId, String name, float minBalance, int duration, ProductGroup productGroup) {
 		super();
 		this.productId = productId;
@@ -104,4 +102,5 @@ public class Product {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 }
