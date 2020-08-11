@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -44,20 +44,20 @@ public class ProductRestImplTest {
 	@MockBean
 	private IProductService productService;
 
-	private List<Product> products; 
+	private static List<Product> products; 
 
-	private Product product;
+	private static Product product;
 
-	@BeforeEach                           
-	void setUp() {                               
+	@BeforeAll                           
+	static void setUp() {                               
 
-		this.products = new ArrayList<>();
+		products = new ArrayList<>();
 
 		ProductGroup productGroup=new ProductGroup(1,"Sparen");
 
-		this.products.add(new Product(1, "Oranjespaarrekening", 2000, 15,productGroup));
-		this.products.add(new Product(2, "Bonusrenterekening", 2000, 15,productGroup));
-		this.products.add(new Product(3, "Spaardeposito", 2000, 15,productGroup));
+		products.add(new Product(1, "Oranjespaarrekening", 2000, 15,productGroup));
+		products.add(new Product(2, "Bonusrenterekening", 2000, 15,productGroup));
+		products.add(new Product(3, "Spaardeposito", 2000, 15,productGroup));
 
 		product=new Product(1, "Oranjespaarrekening", 2000, 15,productGroup);
 	}
@@ -79,7 +79,7 @@ public class ProductRestImplTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.size()").value(this.products.size()));
+            .andExpect(jsonPath("$.size()").value(products.size()));
     }
 	
 	
@@ -93,13 +93,13 @@ public class ProductRestImplTest {
     void testFindByProductIdSuccess() throws Exception {
 
     	Mockito.when(productService.findProductByProductId(product.getProductGroup().getProductGroupId())).
-    	thenReturn(ResponseEntity.ok(this.product));
+    	thenReturn(ResponseEntity.ok(product));
     	
     	mockMvc.perform(get("/api/products/{productId}",1)
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.name").value(this.product.getName()));
+            .andExpect(jsonPath("$.name").value(product.getName()));
     }
 	
 	

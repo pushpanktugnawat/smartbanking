@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -36,18 +36,18 @@ public class ProductGroupRestImplTest {
 
    
     /** The staff members. */
-	private List<ProductGroup> productGroups;       
+	private static List<ProductGroup> productGroups;       
 
 	/**
 	 * Sets the up.
 	 */
-	@BeforeEach                           
-	void setUp() {                               
+	@BeforeAll                           
+	static void setUp() {                               
 
-		this.productGroups = new ArrayList<>();    
-		this.productGroups.add(new ProductGroup(1, "Saving"));
-		this.productGroups.add(new ProductGroup(2, "Betalen"));
-		this.productGroups.add(new ProductGroup(3, "Hypotheek"));
+		productGroups = new ArrayList<>();    
+		productGroups.add(new ProductGroup(1, "Saving"));
+		productGroups.add(new ProductGroup(2, "Betalen"));
+		productGroups.add(new ProductGroup(3, "Hypotheek"));
 		
 	}
 	
@@ -58,12 +58,12 @@ public class ProductGroupRestImplTest {
     @Tag("testGetAllProductGroupsSuccess")
     void testGetAllProductGroupsSuccess() throws Exception {
 
-    	Mockito.when(productGroupService.getAllProductGroup()).thenReturn(ResponseEntity.ok(this.productGroups));
+    	Mockito.when(productGroupService.getAllProductGroup()).thenReturn(ResponseEntity.ok(productGroups));
     	mockMvc.perform(get("/api/productGroup")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.size()").value(this.productGroups.size()));
+            .andExpect(jsonPath("$.size()").value(productGroups.size()));
     }
 	
 	/**

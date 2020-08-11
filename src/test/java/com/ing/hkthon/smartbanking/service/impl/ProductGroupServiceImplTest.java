@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,48 +31,35 @@ public class ProductGroupServiceImplTest {
 	private ProductGroupServiceImpl productGroupServiceImpl;
 
 
-	private List<ProductGroup> productGroups; 
+	private static List<ProductGroup> productGroups; 
 	
-	@BeforeEach                           
-	void setUp() {                               
+	@BeforeAll                           
+	static void setUp() {                               
 
-		this.productGroups = new ArrayList<>();    
-		this.productGroups.add(new ProductGroup(1, "Saving"));
-		this.productGroups.add(new ProductGroup(2, "Betalen"));
-		this.productGroups.add(new ProductGroup(3, "Hypotheek"));
+		productGroups = new ArrayList<>();    
+		productGroups.add(new ProductGroup(1, "Saving"));
+		productGroups.add(new ProductGroup(2, "Peter"));
 	}
 
+	
 	/**
-	 * Test find all staff members success.
+	 * Test get all product group success.
 	 */
 	@Test
-	public void testFindAllProductGroupSuccess() {
+	public void testGetAllProductGroupSuccess() {
 
-		Mockito.when(productGroupDao.findAll()).thenReturn(this.productGroups);
+		Mockito.when(productGroupDao.findAll()).thenReturn(productGroups);
 
 		ResponseEntity<List<ProductGroup>> expected = productGroupServiceImpl.getAllProductGroup();
 
-		Assertions.assertEquals(expected, ResponseEntity.ok(this.productGroups));
+		Assertions.assertEquals(expected.getBody(), productGroups);
 	}
 	
 	/**
-	 * Test find all staff members failure.
+	 * Test get all product group no content.
 	 */
 	@Test
-	public void testFindAllProductGroupFailure() {
-
-		Mockito.when(productGroupDao.findAll()).thenReturn(this.productGroups);
-
-		ResponseEntity<List<ProductGroup>> expected = productGroupServiceImpl.getAllProductGroup();
-
-		Assertions.assertNotSame(expected, ResponseEntity.noContent().build());
-	}
-	
-	/**
-	 * Test find all product group no content found.
-	 */
-	@Test
-	public void testFindAllProductGroupNoContentFound() {
+	public void testGetAllProductGroupNoContent() {
 
 		Mockito.when(productGroupDao.findAll()).thenReturn(null);
 

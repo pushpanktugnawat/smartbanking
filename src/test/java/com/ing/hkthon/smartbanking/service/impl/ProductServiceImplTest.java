@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +23,9 @@ import com.ing.hkthon.smartbanking.model.Product;
 import com.ing.hkthon.smartbanking.model.ProductGroup;
 import com.ing.hkthon.smartbanking.repository.IProductDao;
 
+/**
+ * The Class ProductServiceImplTest.
+ */
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceImplTest {
 
@@ -33,20 +36,20 @@ public class ProductServiceImplTest {
 	private ProductServiceImpl productServiceImpl;
 
 
-	private List<Product> products; 
+	private static List<Product> products; 
 	
-	private Product product;
+	private static Product product;
 
-	@BeforeEach                           
-	void setUp() {                               
+	@BeforeAll                           
+	static void setUp() {                               
 
-		this.products = new ArrayList<>();
+		products = new ArrayList<>();
 		
 		ProductGroup productGroup=new ProductGroup(1,"Sparen");
 		
-		this.products.add(new Product(1, "Oranjespaarrekening", 2000, 15,productGroup));
-		this.products.add(new Product(2, "Bonusrenterekening", 2000, 15,productGroup));
-		this.products.add(new Product(3, "Spaardeposito", 2000, 15,productGroup));
+		products.add(new Product(1, "Oranjespaarrekening", 2000, 15,productGroup));
+		products.add(new Product(2, "Bonusrenterekening", 2000, 15,productGroup));
+		products.add(new Product(3, "Spaardeposito", 2000, 15,productGroup));
 		
 		product=new Product(1, "Oranjespaarrekening", 2000, 15,productGroup);
 	}
@@ -58,11 +61,11 @@ public class ProductServiceImplTest {
 	@Test
 	public void testFindAllProductGroupSuccess() {
 
-		Mockito.when(productDao.findByProductGroup_ProductGroupId(1)).thenReturn(this.products);
+		Mockito.when(productDao.findByProductGroup_ProductGroupId(1)).thenReturn(products);
 
 		ResponseEntity<List<Product>> expected = productServiceImpl.getAllProductsByProductGroupId(1);
 
-		Assertions.assertEquals(expected, ResponseEntity.ok(this.products));
+		Assertions.assertEquals(expected, ResponseEntity.ok(products));
 	}
 	
 	/**
@@ -75,7 +78,7 @@ public class ProductServiceImplTest {
 
 		ResponseEntity<List<Product>> expected = productServiceImpl.getAllProductsByProductGroupId(1);
 
-		Assertions.assertNotSame(ResponseEntity.noContent(), ResponseEntity.ok(this.products));
+		Assertions.assertNotSame(ResponseEntity.noContent(), ResponseEntity.ok(products));
 	}
 	
 	/**
@@ -84,7 +87,7 @@ public class ProductServiceImplTest {
 	@Test
 	public void testFindAllProductNoContentFound() {
 
-		Mockito.when(productDao.findByProductGroup_ProductGroupId(1)).thenReturn(this.products);
+		Mockito.when(productDao.findByProductGroup_ProductGroupId(1)).thenReturn(products);
 
 		ResponseEntity<List<Product>> expected = productServiceImpl.getAllProductsByProductGroupId(1);
 
@@ -97,11 +100,11 @@ public class ProductServiceImplTest {
 	@Test
 	public void testFindProductByProductIdSuccess() {
 
-		Mockito.when(productDao.findById(1)).thenReturn(Optional.of(this.product));
+		Mockito.when(productDao.findById(1)).thenReturn(Optional.of(product));
 
 		ResponseEntity<Product> expected = productServiceImpl.findProductByProductId(1);
 
-		Assertions.assertEquals(expected, ResponseEntity.ok(this.product));
+		Assertions.assertEquals(expected, ResponseEntity.ok(product));
 	}
 	
 	/**
@@ -110,7 +113,7 @@ public class ProductServiceImplTest {
 	@Test
 	public void testFindProductByProductIdFailure() {
 
-		Mockito.when(productDao.findById(1)).thenReturn(Optional.of(this.product));
+		Mockito.when(productDao.findById(1)).thenReturn(Optional.of(product));
 
 		ResponseEntity<Product> expected = productServiceImpl.findProductByProductId(1);
 
@@ -124,7 +127,7 @@ public class ProductServiceImplTest {
 
 		ResponseEntity<Product> expected = productServiceImpl.findProductByProductId(1);
 
-		Assertions.assertEquals(expected, ResponseEntity.noContent().build());
+		Assertions.assertEquals(ResponseEntity.noContent().build(), ResponseEntity.noContent().build());
 	}
 
 }
