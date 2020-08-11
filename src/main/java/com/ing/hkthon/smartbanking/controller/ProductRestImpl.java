@@ -46,6 +46,12 @@ public class ProductRestImpl {
         return productService.getAllProductsByProductGroupId(productGroupId);
     }
     
+    /**
+     * Find by product id.
+     *
+     * @param productId the product id
+     * @return the response entity
+     */
     @GetMapping("/{productId}")
     public ResponseEntity<Product> findByProductId(@PathVariable(name="productId") Integer productId) {
         
