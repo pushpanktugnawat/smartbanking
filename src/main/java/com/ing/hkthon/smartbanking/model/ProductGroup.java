@@ -31,6 +31,14 @@ public class ProductGroup {
 	
 	/** The name. */
 	private String name;
+	
+	
+	/** The product count.
+	 * this column indicates the Product Count for each Product Group
+	 *  */
+	
+	@Column(name="product_count")
+	private int productCount;
 
 	public int getProductGroupId() {
 		return productGroupId;
@@ -48,6 +56,15 @@ public class ProductGroup {
 		this.name = name;
 	}
 
+	
+	public int getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(int productCount) {
+		this.productCount = productCount;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductGroup [productGroupId=" + productGroupId + ", name=" + name + "]";
@@ -63,10 +80,4 @@ public class ProductGroup {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-	
-	
-
 }

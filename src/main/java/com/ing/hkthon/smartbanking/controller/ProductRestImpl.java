@@ -6,10 +6,10 @@
 package com.ing.hkthon.smartbanking.controller;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,21 +29,28 @@ public class ProductRestImpl {
  
     @Autowired
     private  IProductService productService;
+    
+    private Logger logger=LoggerFactory.getLogger(ProductRestImpl.class);
      
     
-    @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    /**
+     * Gets the all products.
+     *
+     * @param productGroupId the product group id
+     * @return the all products
+     */
+    @GetMapping("/findByProductGroup/{productGroupId}")
+    public ResponseEntity<List<Product>> findByProductGroup(@PathVariable(name="productGroupId") int productGroupId) 
+    {
+    	logger.info("@method findByProductGroup @param productGroupId "+productGroupId);
+        return productService.getAllProductsByProductGroupId(productGroupId);
     }
     
-    @GetMapping("{id}")
-    public ResponseEntity<Product> get(@PathVariable Integer id) {
-        try {
-            Product product = productService.getProductById(id);
-            return new ResponseEntity<Product>(product, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-        }      
+    @GetMapping("/{productId}")
+    public ResponseEntity<Product> findByProductId(@PathVariable(name="productId") Integer productId) {
+        
+    	logger.info("@method findByProductId @param productId "+productId);
+    	return productService.findProductByProductId(productId);
     }
     
 }

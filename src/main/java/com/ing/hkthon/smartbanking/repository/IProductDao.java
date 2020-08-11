@@ -5,6 +5,8 @@
  */
 package com.ing.hkthon.smartbanking.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.ing.hkthon.smartbanking.model.Product;
@@ -14,4 +16,5 @@ import com.ing.hkthon.smartbanking.model.Product;
  */
 public interface IProductDao extends CrudRepository<Product, Integer> {
  
+	List<Product> findByProductGroup_ProductGroupId(int productGroup);
 }

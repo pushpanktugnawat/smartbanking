@@ -48,10 +48,52 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+	            <groupId>org.springdoc</groupId>
+	            <artifactId>springdoc-openapi-ui</artifactId>
+	            <version>1.2.32</version>
+	        </dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			
+			<!--Prodvide insight for JUNIT Coverage-->
+			<plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-failsafe-plugin</artifactId>
+	                <version>3.0.0-M4</version>
+	                <executions>
+	                    <execution>
+	                        <goals>
+	                            <goal>integration-test</goal>
+	                            <goal>verify</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+	            </plugin>
+				<plugin>
+	                <groupId>org.jacoco</groupId>
+	                <artifactId>jacoco-maven-plugin</artifactId>
+	                <version>0.8.5</version>
+	                <executions>
+	                    <execution>
+	                        <id>default-prepare-agent</id>
+	                        <goals>
+	                            <goal>prepare-agent</goal>
+	                        </goals>
+	                    </execution>
+	                    <execution>
+	                        <id>default-report</id>
+	                        <phase>verify</phase>
+	                        <goals>
+	                            <goal>report</goal>
+	                        </goals>
+	                    </execution>
+	                </executions>
+	            </plugin>
+				<!--Prodvide insight for JUNIT Coverage ends here-->
+			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

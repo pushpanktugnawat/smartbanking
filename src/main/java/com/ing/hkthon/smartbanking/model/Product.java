@@ -29,7 +29,7 @@ public class Product {
 	/** The product id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="productid")
+	@Column(name="product_id")
 	private int productId;
 	
 	/** The name. */
@@ -41,7 +41,9 @@ public class Product {
 	/** The duration. */
 	private int duration;
 
-	/** The product group. */
+	/** The product group. 
+	 * As each Product belongs to a Product Group
+	 * */
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="product_group_id")
 	private ProductGroup productGroup;
@@ -78,15 +80,7 @@ public class Product {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-
-	public Product(int productId, String name, float minBalance, int duration) {
-		super();
-		this.productId = productId;
-		this.name = name;
-		this.minBalance = minBalance;
-		this.duration = duration;
-	}
-
+	
 	public ProductGroup getProductGroup() {
 		return productGroup;
 	}
@@ -95,15 +89,19 @@ public class Product {
 		this.productGroup = productGroup;
 	}
 
+	
+
+	public Product(int productId, String name, float minBalance, int duration, ProductGroup productGroup) {
+		super();
+		this.productId = productId;
+		this.name = name;
+		this.minBalance = minBalance;
+		this.duration = duration;
+		this.productGroup = productGroup;
+	}
+
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
-	
-	
-	
-
 }

@@ -11,7 +11,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.ing.hkthon.smartbanking.model.Product;
 import com.ing.hkthon.smartbanking.repository.IProductDao;
@@ -29,6 +31,7 @@ public class ProductServiceImpl implements IProductService{
 
 	/** The logger. */
 	private Logger logger = LoggerFactory.getLogger(ProductGroupServiceImpl.class);
+	
 
 	/**
 	 * Gets the all products.
@@ -36,20 +39,42 @@ public class ProductServiceImpl implements IProductService{
 	 * @return the all products
 	 */
 	@Override
-	public List<Product> getAllProducts()
+	public ResponseEntity<List<Product>> getAllProductsByProductGroupId(int productGroup)
 	{
-		logger.info("@method getAllProducts");
-		return (List<Product>) productDao.findAll();
-
+		logger.info("@method getAllProductsByProductGroupId @param productGroup "+ productGroup);
+		
+		List<Product> products= productDao.findByProductGroup_ProductGroupId(productGroup);
+		
+		if(!CollectionUtils.isEmpty(products))
+		 {
+			 logger.debug("@method getAllProductsByProductGroupId with size "+products.size());
+			 
+			 return ResponseEntity.ok(products);
+		 }else 
+		 {
+			 logger.debug("@method getAllProductsByProductGroupId with no content");
+			 return ResponseEntity.noContent().build();
+		 }
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ing.hkthon.smartbanking.service.IProductService#findProductByProductId(int)
+	 */
 	@Override
-	public Product getProductById(int id) {
-		logger.info("@method getAllProducts");
-		Optional<Product> product=productDao.findById(id);
+	public ResponseEntity<Product> findProductByProductId(int productId) 
+	{
+		logger.info("@method findProductByProductId @param productId"+productId);
+		
+		Optional<Product> product=productDao.findById(productId);
+		
 		if(product.isPresent())
-			return product.get();
-		else
-			return null;
+		{
+			logger.info("@method findProductByProductId @success Product found");
+			return ResponseEntity.ok().body(product.get());
+		}
+		else{
+			logger.info("@method findProductByProductId @faiure NO product Found");
+			return ResponseEntity.noContent().build();
+		}
 	}
 }
